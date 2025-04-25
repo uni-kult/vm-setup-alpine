@@ -10,7 +10,7 @@
 * check "Qemu Agent"
 * 2GB HDD; "Discard" and "SSD emulation"
 * 2 cores; type "SandyBridge" (or "host")
-* 1024MB RAM
+* 1024MB RAM; Disable Balooning
 
 ### Console Commands
 
