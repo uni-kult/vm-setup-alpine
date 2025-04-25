@@ -10,6 +10,8 @@ alias x='exit'
 alias du2='du -ach --max-depth=1'
 alias t='tmux new -As0'
 alias 1='ping one.one.one.one'
+alias port='echo $((RANDOM % (65535 - 49152 + 1) + 49152))'
+alias randport='port'
 
 export VISUAL=micro
 export EDITOR="$VISUAL"
