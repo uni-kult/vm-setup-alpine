@@ -40,13 +40,24 @@
 
 * run `ip a`
 * connect over ssh
+* insert the restic-password for this host
+
+```sh
+echo "abcdefg" > /root/.restic-password
+```
 
 ```sh
 mkdir -p /init && wget -qO- https://github.com/uni-kult/vm-setup-alpine/tarball/main | tar -xz --strip-components=1 -f - -C /init
 sh /init/init.sh
 ```
 
+
+
 # Unsorted:
+--------------------------------
+--------------------------------
+--------------------------------
+--------------------------------
 --------------------------------
 
 
