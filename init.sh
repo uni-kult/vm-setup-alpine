@@ -21,7 +21,7 @@ apk add ip6tables ufw
 rc-update add ufw
 ufw default deny incoming
 ufw default allow outgoing
-ufw allow from 192.168.0.0/24 to any port 60000:60100/udp # mosh
+ufw allow from 192.168.0.0/24 to any port 60000:60100 proto udp # mosh
 ufw allow ssh
 ufw limit ssh
 ufw allow http
