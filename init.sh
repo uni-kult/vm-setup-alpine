@@ -75,4 +75,5 @@ rc-update add docker default
 # if this error shows, there is too little RAM available:
 # docker: error during connect: Head "http://%2Fvar%2Frun%2Fdocker.sock/_ping": read unix @->/var/run/docker.sock: read: connection reset by peer.
 
+rm -rf /init
 
