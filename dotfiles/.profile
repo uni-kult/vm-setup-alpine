@@ -13,6 +13,10 @@ alias 1='ping one.one.one.one'
 alias port='echo $((RANDOM % (65535 - 49152 + 1) + 49152))'
 alias randport='port'
 
+export BAT_PAGER='less -XFRM'
+command -v bat >/dev/null && alias cat='bat --style=plain'
+command -v exa >/dev/null && alias ls='exa --color=auto' && alias la='ls -lagF --git'
+
 export VISUAL=micro
 export EDITOR="$VISUAL"
 export MICRO_CONFIG_HOME="$HOME/.micro"

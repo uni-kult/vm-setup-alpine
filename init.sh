@@ -14,7 +14,7 @@ rc-update add qemu-guest-agent
 adduser user -G users -DH -u 1000 -s /sbin/nologin # reserve UID 1000
 wget -O /var/tmp/tempfile http://speedtest.belwue.net/random-100M >/dev/null 2>&1 && find / -size +1k >/dev/null 2>&1 && ls -R / >/dev/null 2>&1 && rm /var/tmp/tempfile >/dev/null 2>&1 && sync # increase entropy
 echo "41 3 * * * apk update && apk upgrade" | tee -a /var/spool/cron/root > /dev/null
-apk add micro tmux curl wget htop mosh rsync iputils-ping
+apk add micro tmux curl wget htop mosh rsync iputils-ping bat exa
 
 apk add audit
 apk add ip6tables ufw
