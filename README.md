@@ -34,6 +34,7 @@
     * "sda"
     * "sys"
 * remove ISO from Hardware tab (but keep CD-Drive)
+* Change boot order: CD-Drive -> HDD (disable Net)
 * run `poweroff`
 
 ### Config
