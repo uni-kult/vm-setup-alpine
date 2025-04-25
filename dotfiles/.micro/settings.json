@@ -1,0 +1,9 @@
+{
+    "colorcolumn": 80,
+    "diffgutter": true,
+    "indentchar": "⇥",
+    "softwrap": true,
+    "tabmovement": true,
+    "tabstospaces": true,
+    "wordwrap": true
+}
