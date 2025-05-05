@@ -19,6 +19,8 @@
 * login with "root"
 * `setup-alpine` (to get "-" press "ß")
 * Hostname
+    * "template"
+* Keyboard Layout
     * "de" -> "de"
 * Interface
     * "eth0"
@@ -27,25 +29,27 @@
 * Timezone
     * "Europe" -> "Berlin"
 * APK Mirror
+    * no proxy
     * "5" -> for hs-esslingen.de
 * User
     * no user
-    * allow root ssh? -> "yes"
+    * allow root ssh? -> "prohibit-password"
     * "openssh"
 * Disk and Install
     * "sda"
     * "sys"
-* remove ISO from Hardware tab (but keep CD-Drive)
+    * confirm? -> "y"
 * run `poweroff`
 
 ### Setup System
 
-* run `ip a`
-* connect over ssh
+* remove ISO from Hardware tab (but keep CD-Drive)
+* start vm with GUI
+* connect via xtem.js
 
 ```sh
 mkdir -p /init && wget -qO- https://github.com/uni-kult/vm-setup-alpine/tarball/main | tar -xz --strip-components=1 -f - -C /init
-sh /init/init.sh
+sh /init/init-template.sh
 ```
 
 ### Convert to Template
