@@ -52,6 +52,7 @@ qm set ${VMID} --ostype l26
 qm set ${VMID} --agent enabled=1
 
 qm set ${VMID} -rng0 source=/dev/urandom
+qm set ${VMID} --tags alpine,u-root
 
 qm start ${VMID}
 
