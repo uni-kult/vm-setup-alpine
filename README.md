@@ -1,19 +1,21 @@
 # README
 
-## Create a new VM
+## Create a new Alpine VM
 
+# Promox Host SSH
+* `micro create-alpine-vm.sh`
+   * set all variables inthe top section
+* `bash create-alpine-vm.sh`
+  
 
-### Proxmox UI
+# Recreate Alpine Template
 
-* Start at boot
-* "alpine-virt-3.21.3-x86\_64.iso"
-* check "Qemu Agent"
-* 2GB HDD; "Discard" and "SSD emulation"
-* 2 cores; type "SandyBridge" (or "host")
-* 1024MB RAM; Disable Balooning
+# Promox Host SSH
+* `bash create-alpine-template.sh`
 
-### Console Commands
+### Install Alpine
 
+* open PVE Console
 * login with "root"
 * `setup-alpine` (to get "-" press "ß")
 * Hostname
@@ -34,24 +36,20 @@
     * "sda"
     * "sys"
 * remove ISO from Hardware tab (but keep CD-Drive)
-* Change boot order: CD-Drive -> HDD (disable Net)
 * run `poweroff`
 
-### Config
+### Setup System
 
 * run `ip a`
 * connect over ssh
-* insert the restic-password for this host
-
-```sh
-echo "abcdefg" > /root/.restic-password
-```
 
 ```sh
 mkdir -p /init && wget -qO- https://github.com/uni-kult/vm-setup-alpine/tarball/main | tar -xz --strip-components=1 -f - -C /init
 sh /init/init.sh
 ```
 
+### Convert to Template
+* Open PVE Gui and convert this VM to a Template
 
 
 # Unsorted:
