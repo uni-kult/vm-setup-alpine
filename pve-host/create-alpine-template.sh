@@ -24,6 +24,7 @@ if qm list | awk '{print $1}' | grep -q "^$VMID$"; then
   echo destroy VM ${VMID}
   qm stop ${VMID}
   qm destroy ${VMID}
+  echo
 fi
 
 ## Create VM
