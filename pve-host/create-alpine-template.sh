@@ -51,6 +51,8 @@ qm set ${VMID} --serial0 socket
 qm set ${VMID} --ostype l26
 qm set ${VMID} --agent enabled=1
 
+qm set ${VMID} -rng0 source=/dev/urandom
+
 qm start ${VMID}
 
 echo
