@@ -14,7 +14,7 @@ rc-update add qemu-guest-agent
 adduser user -G users -DH -u 1000 -s /sbin/nologin # reserve UID 1000
 wget -O /var/tmp/tempfile http://speedtest.belwue.net/random-100M >/dev/null 2>&1 && find / -size +1k >/dev/null 2>&1 && ls -R / >/dev/null 2>&1 && rm /var/tmp/tempfile >/dev/null 2>&1 && sync # increase entropy
 echo "41 3 * * * apk update && apk upgrade" | tee -a /var/spool/cron/root > /dev/null
-apk add micro tmux curl wget htop mosh rsync iputils-ping bat exa
+apk add micro tmux curl wget htop mosh rsync iputils-ping bat exa rng-tools
 
 apk add audit
 apk add ip6tables ufw
@@ -75,5 +75,4 @@ rc-update add docker default
 # if this error shows, there is too little RAM available:
 # docker: error during connect: Head "http://%2Fvar%2Frun%2Fdocker.sock/_ping": read unix @->/var/run/docker.sock: read: connection reset by peer.
 
-rm -rf /init
-
+#rm -rf /init
