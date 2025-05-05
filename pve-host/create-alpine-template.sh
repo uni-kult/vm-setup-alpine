@@ -40,7 +40,7 @@ qm set ${VMID} --onboot 1
 qm set ${VMID} --cdrom ${ISO_STORAGE}:iso/${ISO_FILE},media=cdrom
 
 ### OS Drive
-pvesm alloc ${DISK_STORAGE] ${VMID} vm-${VMID}-disk-0 ${DISK_SIZE}
+pvesm alloc ${DISK_STORAGE} ${VMID} vm-${VMID}-disk-0 ${DISK_SIZE}
 qm set ${VMID} --scsi0 ${DISK_STORAGE}:vm-${VMID}-disk-0,discard=on,iothread=1,cache=none --scsihw virtio-scsi-single 
 
 ### Boot Order
