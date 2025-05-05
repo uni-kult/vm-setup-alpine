@@ -1,7 +1,7 @@
 #!/bin/bash
 
 VMID=9000
-NAME="alpine-template"
+NAME="template"
 DISK_SIZE="2G"
 RAM=1024
 CPU_CORES=2
@@ -15,13 +15,13 @@ CPUTYPE="SandyBridge"
 
 ## If existing, remove
 if qm list | awk '{print $1}' | grep -q "^$VMID$"; then
-	read -p "VM ${VMID} already exists. Do you want to delete it? (y/N) " confirmation
-	if [[ "$confirmation" != "y" && "$confirmation" != "Y" ]]; then
-	  echo "Deletion cancelled."
-	  exit 1
-	fi
-	
-	echo destroy VM ${VMID}
+  read -p "VM ${VMID} already exists. Do you want to delete it? (y/N) " confirmation
+  if [[ "$confirmation" != "y" && "$confirmation" != "Y" ]]; then
+    echo "Deletion cancelled."
+    exit 1
+  fi
+
+  echo destroy VM ${VMID}
   qm stop ${VMID}
   qm destroy ${VMID}
 fi
