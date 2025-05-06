@@ -56,6 +56,7 @@ sh /init/init-template.sh
 ```
 
 ### Convert to Template
+* run `poweroff`
 * Open PVE Gui and convert this VM to a Template
 
 
