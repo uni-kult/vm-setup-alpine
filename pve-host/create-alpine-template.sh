@@ -67,4 +67,12 @@ GROUP default
 EOF
 
 echo
+echo - Remove ISO from Hardware tab (but keep CD-Drive)
+echo - Run:
+echo '"""'
+echo mkdir -p /init && wget -qO- https://github.com/uni-kult/vm-setup-alpine/tarball/main | tar -xz --strip-components=1 -f - -C /init
+echo sh /init/init-template.sh
+echo poweroff
+echo '"""'
+echo - Convert to Template
 echo "https://github.com/uni-kult/vm-setup-alpine?tab=readme-ov-file#recreate-alpine-template"
