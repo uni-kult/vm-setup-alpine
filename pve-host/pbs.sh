@@ -1,4 +1,6 @@
 #!/bin/bash
+set -euf -o pipefail
+
 export PBS_REPOSITORY="..."
 export PBS_PASSWORD="..."
 export PBS_FINGERPRINT="..."
