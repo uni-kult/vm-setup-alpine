@@ -67,7 +67,7 @@ GROUP default
 EOF
 
 echo
-echo "* Run 'poweroff'"
+echo "* Run 'poweroff' in the VM"
 echo "* Remove ISO from Hardware tab (but keep CD-Drive)"
 echo "* Run:"
 echo '"""'
