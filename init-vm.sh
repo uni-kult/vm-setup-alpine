@@ -1,7 +1,37 @@
 #!/bin/sh
 set -eu
 
-rm /etc/ssh/ssh_host_* && ssh-keygen -A
-cat /proc/sys/kernel/random/uuid | cut -d'-' -f1 > /etc/vm-id
+if [ $# -lt 3 ]; then
+  echo "Error: Missing arguments."
+  echo "Usage: $0 <hostname> <ip_address> <restic_config_identifier>"
+  exit 1
+fi
 
-# edit /etc/network/interface
+
+NAME="$1"
+IP="$2"
+RESTIC_PASSWORD="$3"
+
+rm /etc/ssh/ssh_host_* && ssh-keygen -A
+
+
+echo Name: $1
+echo IP: $2
+echo restic: $3
+
+echo "${HOSTNAME}" > /etc/hostname
+hostname -F /etc/hostname
+
+cat <<EOF > /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+        address ${IP_ADDRESS}/24
+        gateway 192.168.0.1
+EOF
+
+rc-service networking restart
+
+apk update && apk upgrade
