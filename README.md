@@ -59,34 +59,8 @@ sh /init/init-template.sh
 * Open PVE Gui and convert this VM to a Template
 
 
-# Unsorted:
---------------------------------
---------------------------------
---------------------------------
---------------------------------
---------------------------------
-
-
-
-# micro /etc/network/interfaces
-replace this:
-```sh
-auto eth0
-iface eth0 inet dhcp
-```
-
-with this:
-```sh
-auto eth0
-iface eth0 inet static
-        address 10.200.5.100/24
-        gateway 10.200.5.1
-```
-reboot
-
-
-
 #-----------------------------------------------------------
+# Unsorted:
 # expand alpine disk:
 ```sh
 apk add cfdisk e2fsprogs-extra
