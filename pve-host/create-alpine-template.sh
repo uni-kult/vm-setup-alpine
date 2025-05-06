@@ -72,9 +72,9 @@ echo
 echo "Summary:"
 echo "--------"
 echo
-echo "* Run 'poweroff' in the VM"
-echo "* Remove ISO from Hardware tab (but keep CD-Drive)"
 echo "* Run 'setup-keymap' and 'setup-alpine' in the VM"
+echo "* Run 'poweroff' in the VM"
+echo "* Remove ISO from Hardware tab (but keep CD-Drive); And turn back on."
 echo "* Run:"
 echo '"""'
 echo "mkdir -p /init && wget -qO- https://github.com/uni-kult/vm-setup-alpine/tarball/main | tar -xz --strip-components=1 -f - -C /init"
