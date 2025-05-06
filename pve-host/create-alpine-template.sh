@@ -57,5 +57,13 @@ qm set ${VMID} --tags alpine,u-root
 
 qm start ${VMID}
 
+cat <<EOF > /etc/pve/firewall/${VMID}.fw
+[OPTIONS]
+enable: 1
+
+[RULES]
+GROUP default
+EOF
+
 echo
 echo "https://github.com/uni-kult/vm-setup-alpine?tab=readme-ov-file#recreate-alpine-template"
