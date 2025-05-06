@@ -7,13 +7,11 @@ if [ $# -lt 3 ]; then
   exit 1
 fi
 
-
 NAME="$1"
 IP="$2"
 RESTIC_PASSWORD="$3"
 
 rm /etc/ssh/ssh_host_* && ssh-keygen -A
-
 
 echo Name: $1
 echo IP: $2
@@ -28,7 +26,7 @@ iface lo inet loopback
 
 auto eth0
 iface eth0 inet static
-        address ${IP_ADDRESS}/24
+        address ${IP}/24
         gateway 192.168.0.1
 EOF
 
