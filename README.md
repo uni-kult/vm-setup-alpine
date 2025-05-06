@@ -17,11 +17,14 @@
 
 * open PVE Console
 * login with "root"
-* `setup-alpine` (to get "-" press "ß")
-* Hostname
-    * "template"
+* `setup-keymap` (to get "-" press "ß")
+    * "de" -> "de"
+
+* `setup-alpine`
 * Keyboard Layout
     * "de" -> "de"
+* Hostname
+    * "template"
 * Interface
     * "eth0"
     * "dhcp"
