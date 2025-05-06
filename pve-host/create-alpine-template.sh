@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euf -o pipefail
 
 VMID=9000
 NAME="template"
