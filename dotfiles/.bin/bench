@@ -1,25 +1,6 @@
 #!/bin/sh
 set -eu
 
-# ANSI color codes
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
-BLUE='\033[0;34m'
-MAGENTA='\033[0;35m'
-CYAN='\033[0;36m'
-NC='\033[0m' # No Color
-
-
-# No Colors
-RED=''
-GREEN=''
-YELLOW=''
-BLUE=''
-MAGENTA=''
-CYAN=''
-NC='' 
-
 # Function to get system information with grep
 grep_info() {
     local file="$1"
@@ -78,7 +59,7 @@ if [ -n "$cpu_model" ]; then
 else
     cpu_model="CPU model not detected"
 fi
-log_info "CPU Model" "${GREEN}$cpu_model${NC}"
+log_info "CPU Model" "$cpu_model"
 
 # CPU Microarchitecture detection (basic)
 cpu_family=$(grep_info "/proc/cpuinfo" "cpu family" | sed 's/.*: //')
@@ -119,7 +100,7 @@ elif [ "$cpu_vendor" = "AuthenticAMD" ]; then
     esac
 fi
 
-[ "$cpu_arch" != "Unknown" ] && log_info "CPU Architecture" "${CYAN}$cpu_arch${NC}"
+[ "$cpu_arch" != "Unknown" ] && log_info "CPU Architecture" "$cpu_arch"
 
 # Physical Cores vs Threads
 physical_cores=$(grep -c "core id" /proc/cpuinfo 2>/dev/null || echo "Unknown")
@@ -127,12 +108,12 @@ logical_cores=$(grep -c "processor" /proc/cpuinfo 2>/dev/null || echo "Unknown")
 
 if [ "$physical_cores" != "Unknown" ] && [ "$logical_cores" != "Unknown" ]; then
     if [ "$physical_cores" -eq "$logical_cores" ]; then
-        log_info "CPU Cores" "${GREEN}$physical_cores Physical Cores${NC}"
+        log_info "CPU Cores" "$physical_cores Physical Cores"
     else
-        log_info "CPU Cores" "${GREEN}$physical_cores Physical, $logical_cores Logical${NC}"
+        log_info "CPU Cores" "$physical_cores Physical, $logical_cores Logical"
     fi
 else
-    log_info "CPU Cores" "${GREEN}$logical_cores${NC}"
+    log_info "CPU Cores" "$logical_cores"
 fi
 
 # CPU Frequency - Current, Min, Max
@@ -155,9 +136,9 @@ if [ -f "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq" ]; then
     fi
     
     if [ "$cpu_min_freq" != "Unknown" ] && [ "$cpu_max_freq" != "Unknown" ]; then
-        freq_info="${GREEN}Current: ${cpu_freq} MHz${NC} (Min: ${cpu_min_freq} MHz, Max: ${cpu_max_freq} MHz)"
+        freq_info="Current: ${cpu_freq} MHz (Min: ${cpu_min_freq} MHz, Max: ${cpu_max_freq} MHz)"
     else
-        freq_info="${GREEN}${cpu_freq} MHz${NC}"
+        freq_info="${cpu_freq} MHz"
     fi
     
     log_info "CPU Frequency" "$freq_info"
@@ -166,14 +147,14 @@ else
     cpu_freq=$(grep_info "/proc/cpuinfo" "cpu MHz")
     if [ -n "$cpu_freq" ]; then
         cpu_freq=$(echo "$cpu_freq" | sed 's/cpu MHz.*: //')
-        log_info "CPU Frequency" "${GREEN}${cpu_freq} MHz${NC}"
+        log_info "CPU Frequency" "${cpu_freq} MHz"
     fi
 fi
 
 # CPU Governor
 if [ -f "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor" ]; then
     cpu_governor=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor 2>/dev/null)
-    log_info "CPU Governor" "${CYAN}$cpu_governor${NC}"
+    log_info "CPU Governor" "$cpu_governor"
 fi
 
 # CPU Temperature (if available)
@@ -182,7 +163,7 @@ if [ -f "/sys/class/thermal/thermal_zone0/temp" ]; then
     cpu_temp=$(cat /sys/class/thermal/thermal_zone0/temp 2>/dev/null)
     if [ -n "$cpu_temp" ]; then
         cpu_temp=$(echo "scale=1; $cpu_temp/1000" | bc -l 2>/dev/null || echo "$cpu_temp/1000" | awk '{printf "%.1f", $1}')
-        log_info "CPU Temperature" "${RED}${cpu_temp}°C${NC}"
+        log_info "CPU Temperature" "${cpu_temp}°C"
     fi
 elif [ -d "/sys/class/hwmon" ]; then
     # Try to find temperature through hwmon
@@ -191,7 +172,7 @@ elif [ -d "/sys/class/hwmon" ]; then
             if [ -f "$hwmon/temp1_input" ]; then
                 cpu_temp=$(cat "$hwmon/temp1_input" 2>/dev/null)
                 cpu_temp=$(echo "scale=1; $cpu_temp/1000" | bc -l 2>/dev/null || echo "$cpu_temp/1000" | awk '{printf "%.1f", $1}')
-                log_info "CPU Temperature" "${RED}${cpu_temp}°C${NC}"
+                log_info "CPU Temperature" "${cpu_temp}°C"
                 break
             fi
         fi
@@ -208,7 +189,7 @@ fi
 # CPU Load
 if [ -f "/proc/loadavg" ]; then
     load_avg=$(cat /proc/loadavg 2>/dev/null | awk '{print $1, $2, $3}')
-    log_info "CPU Load Avg" "1min: ${YELLOW}$(echo "$load_avg" | awk '{print $1}')${NC}, 5min: ${YELLOW}$(echo "$load_avg" | awk '{print $2}')${NC}, 15min: ${YELLOW}$(echo "$load_avg" | awk '{print $3}')${NC}"
+    log_info "CPU Load Avg" "1min: $(echo "$load_avg" | awk '{print $1}'), 5min: $(echo "$load_avg" | awk '{print $2}'), 15min: $(echo "$load_avg" | awk '{print $3}')"
 fi
 
 # CPU Important Flags
@@ -235,7 +216,7 @@ elif grep -q " avx " /proc/cpuinfo 2>/dev/null; then
 fi
 
 if [ -n "$avx_flags" ]; then
-    log_info "AVX Support" "${GREEN}$avx_flags${NC}"
+    log_info "AVX Support" "$avx_flags"
 fi
 
 # Memory information
@@ -255,7 +236,7 @@ if command -v free >/dev/null 2>&1; then
         mem_total_fmt=$(echo "$mem_total" | awk '{printf "%.1f", $1/1024}')
         mem_used_fmt=$(echo "$mem_used" | awk '{printf "%.1f", $1/1024}')
         
-        log_info "Memory" "${YELLOW}${mem_total_fmt} GB${NC} | Used: ${YELLOW}${mem_used_fmt} GB${NC} (${YELLOW}${mem_used_percent}${NC})"
+        log_info "Memory" "${mem_total_fmt} GB | Used: ${mem_used_fmt} GB (${mem_used_percent})"
     else
         # Fallback to /proc/meminfo
         if [ -f "/proc/meminfo" ]; then
@@ -275,7 +256,7 @@ if command -v free >/dev/null 2>&1; then
             total_mem=$(format_size $((total_mem_kb * 1024)))
             used_mem=$(format_size $((used_mem_kb * 1024)))
             
-            log_info "Memory" "${YELLOW}$total_mem${NC} | Used: ${YELLOW}$used_mem${NC} (${YELLOW}${used_percent}${NC})"
+            log_info "Memory" "$total_mem | Used: $used_mem (${used_percent})"
         else
             log_info "Memory" "Unknown"
         fi
@@ -290,7 +271,7 @@ if command -v dmidecode >/dev/null 2>&1 && [ "$(id -u)" -eq 0 ]; then
     mem_speed=$(dmidecode -t memory 2>/dev/null | grep -m 1 "Speed:" | grep -v "Configured" | awk '{print $2 $3}')
     
     if [ -n "$mem_type" ] && [ -n "$mem_speed" ]; then
-        log_info "Memory Type" "${CYAN}$mem_type @ $mem_speed${NC}"
+        log_info "Memory Type" "$mem_type @ $mem_speed"
     fi
 fi
 
@@ -310,7 +291,7 @@ if command -v free >/dev/null 2>&1; then
             swap_total_fmt=$(echo "$swap_total" | awk '{printf "%.1f", $1/1024}')
             swap_used_fmt=$(echo "$swap_used" | awk '{printf "%.1f", $1/1024}')
             
-            log_info "Swap" "${BLUE}${swap_total_fmt} GB${NC} | Used: ${BLUE}${swap_used_fmt} GB${NC} (${BLUE}${swap_used_percent}${NC})"
+            log_info "Swap" "${swap_total_fmt} GB | Used: ${swap_used_fmt} GB (${swap_used_percent})"
         fi
     else
         # Fallback to /proc/meminfo
@@ -324,7 +305,7 @@ if command -v free >/dev/null 2>&1; then
                 total_swap=$(format_size $((total_swap_kb * 1024)))
                 used_swap=$(format_size $((used_swap_kb * 1024)))
                 
-                log_info "Swap" "${BLUE}$total_swap${NC} | Used: ${BLUE}$used_swap${NC} (${BLUE}${used_percent}${NC})"
+                log_info "Swap" "$total_swap | Used: $used_swap (${used_percent})"
             fi
         fi
     fi
@@ -432,7 +413,7 @@ elif [ -f "/etc/lsb-release" ]; then
 else
     os_name=$(uname -s)
 fi
-log_info "OS" "${MAGENTA}$os_name${NC}"
+log_info "OS" "$os_name"
 
 # Current Shell
 current_shell="$(basename "$SHELL" 2>/dev/null || echo "Unknown")"
@@ -462,7 +443,7 @@ log_info "Architecture" "$arch_full"
 # Kernel
 kernel=$(uname -r)
 kernel_full="$(uname -s)-$kernel"
-log_info "Kernel" "${MAGENTA}$kernel_full${NC}"
+log_info "Kernel" "$kernel_full"
 
 # Virtualization
 if command -v systemd-detect-virt >/dev/null 2>&1; then
@@ -481,7 +462,7 @@ else
         virt="Xen"
     fi
 fi
-log_info "Virtualization" "${MAGENTA}$virt${NC}"
+log_info "Virtualization" "$virt"
 
 # Motherboard information (if available)
 if command -v dmidecode >/dev/null 2>&1 && [ "$(id -u)" -eq 0 ]; then
@@ -535,7 +516,7 @@ fi
 
 # If we found GPU info, display it
 if [ -n "$gpu_info" ]; then
-    log_info "GPU" "${CYAN}$gpu_info${NC}"
+    log_info "GPU" "$gpu_info"
     
     # Try to get GPU driver info
     if command -v lspci >/dev/null 2>&1; then
@@ -567,9 +548,9 @@ short_hostname=$(hostname -s 2>/dev/null || hostname 2>/dev/null || echo "Unknow
 fqdn_hostname=$(hostname -f 2>/dev/null || echo "$short_hostname")
 
 if [ "$short_hostname" = "$fqdn_hostname" ]; then
-    log_info "Hostname" "${MAGENTA}$short_hostname${NC}"
+    log_info "Hostname" "$short_hostname"
 else
-    log_info "Hostname" "${MAGENTA}$short_hostname${NC} ($fqdn_hostname)"
+    log_info "Hostname" "$short_hostname ($fqdn_hostname)"
 fi
 
 
