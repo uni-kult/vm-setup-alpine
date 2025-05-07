@@ -1,0 +1,56 @@
+#!/bin/sh
+set -eu
+
+CONFIG_DIR="/config"
+
+function print_usage() {
+    echo "Usage: $0 [up|down]"
+    echo ""
+    echo "Commands:"
+    echo "  up      Start all Docker Compose services"
+    echo "  down    Stop all Docker Compose services"
+    echo ""
+    exit 1
+}
+
+function start_services() {
+    echo "🚀 Starting all Docker Compose services..."
+    for service_dir in "$CONFIG_DIR"/*/; do
+        if [ -f "$service_dir/compose.yaml" ]; then
+            service_name=$(basename "$service_dir")
+            echo "📦 Starting $service_name..."
+            cd "$service_dir" && docker compose up -d
+        fi
+    done
+    echo "✅ All services started"
+}
+
+function stop_services() {
+    echo "🛑 Stopping all Docker Compose services..."
+    for service_dir in "$CONFIG_DIR"/*/; do
+        if [ -f "$service_dir/compose.yaml" ]; then
+            service_name=$(basename "$service_dir")
+            echo "📦 Stopping $service_name..."
+            cd "$service_dir" && docker compose down
+        fi
+    done
+    echo "✅ All services stopped"
+}
+
+# Check if command is provided
+if [ $# -ne 1 ]; then
+    print_usage
+fi
+
+# Process command
+case "$1" in
+    up)
+        start_services
+        ;;
+    down)
+        stop_services
+        ;;
+    *)
+        print_usage
+        ;;
+esac
