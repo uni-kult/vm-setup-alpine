@@ -13,11 +13,11 @@ RESTIC_PASSWORD="$3"
 
 rm /etc/ssh/ssh_host_* && ssh-keygen -A
 
-echo Name: $1
-echo IP: $2
-echo restic: $3
+echo Name: $NAME
+echo IP: $IP
+echo restic-password: $RESTIC_PASSWORD
 
-echo "${HOSTNAME}" > /etc/hostname
+echo "${NAME}" > /etc/hostname
 hostname -F /etc/hostname
 
 cat <<EOF > /etc/network/interfaces
