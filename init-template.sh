@@ -3,6 +3,7 @@ set -eu
 
 mv /init/quick-info.md /root/README.md
 find /init/dotfiles/ -mindepth 1 -maxdepth 1 -name ".*" -exec cp -a {} "$HOME" \;
+chmod +x -R ~/.bin/
 
 truncate -s 0 /etc/motd
 sed -i '/community/ s/^#//' /etc/apk/repositories
