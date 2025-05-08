@@ -18,6 +18,7 @@ echo restic-password: $RESTIC_PASSWORD
 
 echo "${NAME}" > /etc/hostname
 hostname -F /etc/hostname
+sed -i "s/template/${NAME}/g" Caddyfile
 
 cat <<EOF > /etc/network/interfaces
 auto lo
