@@ -54,3 +54,5 @@ RANDOM_STRING=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c128)
 qm guest exec ${VMID} --timeout 0 -- /bin/sh -c "sh /init/init-vm.sh ${NAME} ${IP} ${RESTIC_PASSWORD} ${RANDOM_STRING}"
 qm guest exec ${VMID} --timeout 0 -- /bin/sh -c "rm -rf /init/"
 
+qm reboot ${VMID}
+
