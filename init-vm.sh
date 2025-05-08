@@ -62,3 +62,4 @@ rm '/etc/ssh/ssh_host_rsa_key'
 rm '/etc/ssh/ssh_host_rsa_key.pub'
 
 ssh-keygen -A
+rc-service sshd restart
