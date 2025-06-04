@@ -22,6 +22,7 @@ export EDITOR="$VISUAL"
 export MICRO_CONFIG_HOME="$HOME/.micro"
 export PATH="$HOME/.bin:$PATH"
 export HOST # for automatic backups
+export TERM=xterm-256color # for tmux
 
 
 bold="\e[1m"
