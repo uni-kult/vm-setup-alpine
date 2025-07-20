@@ -33,6 +33,7 @@ EOF
 rc-service networking restart
 
 apk update && apk upgrade
+ntpd -q -n -p ntp.lrz.de
 
 ######### start of: increase entropy
 wget -O /var/tmp/tempfile http://speedtest.belwue.net/random-100M >/dev/null 2>&1 && find / -size +1k >/dev/null 2>&1 && ls -R / >/dev/null 2>&1 && rm /var/tmp/tempfile >/dev/null 2>&1 && sync
