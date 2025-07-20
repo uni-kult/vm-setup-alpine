@@ -4,7 +4,7 @@
 VMID=100
 NAME="alpine-test"
 IP="192.168.0.199"
-RESTIC_PASSWORD="..."
+NFS_PASSWORD="..."
 
 
 #############################################
@@ -51,7 +51,7 @@ echo "qemu-guest-agent started!"
 
 
 RANDOM_STRING=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c128)
-qm guest exec ${VMID} --timeout 0 -- /bin/sh -c "sh /init/init-vm.sh ${NAME} ${IP} ${RESTIC_PASSWORD} ${RANDOM_STRING}"
+qm guest exec ${VMID} --timeout 0 -- /bin/sh -c "sh /init/init-vm.sh ${NAME} ${IP} ${VMID} ${NFS_PASSWORD} ${RANDOM_STRING}"
 qm guest exec ${VMID} --timeout 0 -- /bin/sh -c "rm -rf /init/"
 qm guest exec ${VMID} --timeout 0 -- /bin/sh -c "rm /root/.ash_history"
 
