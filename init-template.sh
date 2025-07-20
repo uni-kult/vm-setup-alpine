@@ -18,6 +18,9 @@ echo "41 3 * * * apk update && apk upgrade" | tee -a /var/spool/cron/root > /dev
 echo "7 4 * * * ntpd -d -q -n -p ntp.lrz.de" | tee -a /var/spool/cron/root > /dev/null
 apk add micro tmux curl wget htop mosh rsync iputils-ping bat exa rng-tools lazydocker ctop cfdisk e2fsprogs-extra nfs-utils
 
+rc-update add nfsmount
+mkdir /backups
+
 apk add audit
 apk add ip6tables ufw
 rc-update add ufw
