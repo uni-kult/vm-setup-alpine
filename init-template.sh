@@ -16,7 +16,7 @@ adduser user -G users -DH -u 1000 -s /sbin/nologin # reserve UID 1000
 wget -O /var/tmp/tempfile http://speedtest.belwue.net/random-100M >/dev/null 2>&1 && find / -size +1k >/dev/null 2>&1 && ls -R / >/dev/null 2>&1 && rm /var/tmp/tempfile >/dev/null 2>&1 && sync # increase entropy
 echo "41 3 * * * apk update && apk upgrade" | tee -a /var/spool/cron/root > /dev/null
 echo "7 4 * * * ntpd -d -q -n -p ntp.lrz.de" | tee -a /var/spool/cron/root > /dev/null
-apk add micro tmux curl wget htop mosh rsync iputils-ping bat exa rng-tools lazydocker ctop cfdisk e2fsprogs-extra
+apk add micro tmux curl wget htop mosh rsync iputils-ping bat exa rng-tools lazydocker ctop cfdisk e2fsprogs-extra nfs-utils
 
 apk add audit
 apk add ip6tables ufw
