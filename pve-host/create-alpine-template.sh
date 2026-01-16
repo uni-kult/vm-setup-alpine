@@ -1,16 +1,17 @@
 #!/bin/bash
 set -euf -o pipefail
 
-VMID=9000
+VMID=100
 NAME="template"
-DISK_SIZE="2G"
+DISK_SIZE="5G"
 RAM=1024
 CPU_CORES=2
 
 DISK_STORAGE="local-lvm"
 ISO_STORAGE="iso-images"
-ISO_FILE="alpine-virt-3.21.3-x86_64.iso"
-INTERFACE="vmbr0"
+ISO_FILE="alpine-virt-3.23.2-x86_64.iso"
+INTERFACE="vmbr_vm"
+VLAN="1"
 CPUTYPE="SandyBridge"
 
 
@@ -47,14 +48,14 @@ qm set ${VMID} --scsi0 ${DISK_STORAGE}:vm-${VMID}-disk-0,discard=on,iothread=1,c
 
 ### Boot Order
 qm set ${VMID} --boot order='ide2;scsi0'
-qm set ${VMID} --net0 virtio,bridge=${INTERFACE},firewall=1
+qm set ${VMID} --net0 virtio,bridge=${INTERFACE},firewall=1,tag=${VLAN}
 
 qm set ${VMID} --serial0 socket
 qm set ${VMID} --ostype l26
 qm set ${VMID} --agent enabled=1
 
 qm set ${VMID} -rng0 source=/dev/urandom
-qm set ${VMID} --tags alpine,u-root
+#qm set ${VMID} --tags alpine,u-root
 
 qm start ${VMID}
 
