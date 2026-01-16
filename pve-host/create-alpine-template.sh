@@ -7,7 +7,7 @@ DISK_SIZE="5G"
 RAM=1024
 CPU_CORES=2
 
-DISK_STORAGE="local-lvm"
+DISK_STORAGE="local-zfs"
 ISO_STORAGE="iso-images"
 ISO_FILE="alpine-virt-3.23.2-x86_64.iso"
 INTERFACE="vmbr_vm"
