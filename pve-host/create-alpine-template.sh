@@ -76,7 +76,7 @@ echo "--------"
 echo "* connect via xterm.js to the VM"
 echo "setup-interfaces # (3x Enter)"
 echo "rc-service networking restart"
-echo "wget -qO- http://packages.lan.unikult.eu/custom/init/create-template.sh | sh"
+echo "wget -qO- https://files.int.unikult.eu/init/create-template.sh | sh"
 echo "* Remove ISO from Hardware tab (but keep CD-Drive); And turn back on."
 echo "--------"
 
